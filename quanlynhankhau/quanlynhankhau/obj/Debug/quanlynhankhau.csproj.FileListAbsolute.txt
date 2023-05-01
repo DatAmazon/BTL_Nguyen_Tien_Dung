@@ -1,0 +1,15 @@
+F:\quanlynhankhau\quanlynhankhau\quanlynhankhau\bin\Debug\quanlynhankhau.exe.config
+F:\quanlynhankhau\quanlynhankhau\quanlynhankhau\bin\Debug\quanlynhankhau.exe
+F:\quanlynhankhau\quanlynhankhau\quanlynhankhau\bin\Debug\quanlynhankhau.pdb
+F:\quanlynhankhau\quanlynhankhau\quanlynhankhau\obj\Debug\quanlynhankhau.Form1.resources
+F:\quanlynhankhau\quanlynhankhau\quanlynhankhau\obj\Debug\quanlynhankhau.HoGiaDinh.resources
+F:\quanlynhankhau\quanlynhankhau\quanlynhankhau\obj\Debug\quanlynhankhau.Phuong.resources
+F:\quanlynhankhau\quanlynhankhau\quanlynhankhau\obj\Debug\quanlynhankhau.Properties.Resources.resources
+F:\quanlynhankhau\quanlynhankhau\quanlynhankhau\obj\Debug\quanlynhankhau.Quan.resources
+F:\quanlynhankhau\quanlynhankhau\quanlynhankhau\obj\Debug\quanlynhankhau.ThanNhan.resources
+F:\quanlynhankhau\quanlynhankhau\quanlynhankhau\obj\Debug\quanlynhankhau.To.resources
+F:\quanlynhankhau\quanlynhankhau\quanlynhankhau\obj\Debug\quanlynhankhau.csproj.GenerateResource.cache
+F:\quanlynhankhau\quanlynhankhau\quanlynhankhau\obj\Debug\quanlynhankhau.csproj.CoreCompileInputs.cache
+F:\quanlynhankhau\quanlynhankhau\quanlynhankhau\obj\Debug\quanlynhankhau.exe
+F:\quanlynhankhau\quanlynhankhau\quanlynhankhau\obj\Debug\quanlynhankhau.pdb
+F:\quanlynhankhau\quanlynhankhau\quanlynhankhau\obj\Debug\quanlynhankhau.csproj.AssemblyReference.cache
