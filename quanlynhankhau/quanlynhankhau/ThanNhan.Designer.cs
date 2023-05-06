@@ -29,13 +29,11 @@ namespace quanlynhankhau
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.txtHoTen = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
-            this.txtGioiTinh = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
             this.txtMaThanNhan = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
-            this.txtNgaySinh = new System.Windows.Forms.TextBox();
             this.txtQuanHeVoiChuHo = new System.Windows.Forms.TextBox();
             this.txtMaHoGD = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
@@ -48,7 +46,14 @@ namespace quanlynhankhau
             this.btnDelete = new System.Windows.Forms.Button();
             this.btnUpdate = new System.Windows.Forms.Button();
             this.btnAdd = new System.Windows.Forms.Button();
+            this.dtpNS = new System.Windows.Forms.DateTimePicker();
+            this.radioButtonNam = new System.Windows.Forms.RadioButton();
+            this.radioButtonNu = new System.Windows.Forms.RadioButton();
+            this.groupBoxGender = new System.Windows.Forms.GroupBox();
+            this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.dgv)).BeginInit();
+            this.groupBoxGender.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.SuspendLayout();
             // 
             // txtHoTen
@@ -57,6 +62,7 @@ namespace quanlynhankhau
             this.txtHoTen.Name = "txtHoTen";
             this.txtHoTen.Size = new System.Drawing.Size(188, 22);
             this.txtHoTen.TabIndex = 145;
+            this.txtHoTen.Validating += new System.ComponentModel.CancelEventHandler(this.txtHoTen_Validating);
             // 
             // label6
             // 
@@ -67,23 +73,6 @@ namespace quanlynhankhau
             this.label6.Size = new System.Drawing.Size(69, 20);
             this.label6.TabIndex = 144;
             this.label6.Text = "Họ tên: ";
-            // 
-            // txtGioiTinh
-            // 
-            this.txtGioiTinh.Location = new System.Drawing.Point(622, 52);
-            this.txtGioiTinh.Name = "txtGioiTinh";
-            this.txtGioiTinh.Size = new System.Drawing.Size(188, 22);
-            this.txtGioiTinh.TabIndex = 143;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(540, 52);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(81, 20);
-            this.label2.TabIndex = 142;
-            this.label2.Text = "Giới tính: ";
             // 
             // txtMaThanNhan
             // 
@@ -103,19 +92,13 @@ namespace quanlynhankhau
             this.label5.TabIndex = 140;
             this.label5.Text = "Mã thân nhân: ";
             // 
-            // txtNgaySinh
-            // 
-            this.txtNgaySinh.Location = new System.Drawing.Point(622, 88);
-            this.txtNgaySinh.Name = "txtNgaySinh";
-            this.txtNgaySinh.Size = new System.Drawing.Size(188, 22);
-            this.txtNgaySinh.TabIndex = 139;
-            // 
             // txtQuanHeVoiChuHo
             // 
             this.txtQuanHeVoiChuHo.Location = new System.Drawing.Point(622, 124);
             this.txtQuanHeVoiChuHo.Name = "txtQuanHeVoiChuHo";
             this.txtQuanHeVoiChuHo.Size = new System.Drawing.Size(188, 22);
             this.txtQuanHeVoiChuHo.TabIndex = 138;
+            this.txtQuanHeVoiChuHo.Validating += new System.ComponentModel.CancelEventHandler(this.txtQuanHeVoiChuHo_Validating);
             // 
             // txtMaHoGD
             // 
@@ -157,7 +140,7 @@ namespace quanlynhankhau
             // btnReset
             // 
             this.btnReset.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnReset.Location = new System.Drawing.Point(740, 665);
+            this.btnReset.Location = new System.Drawing.Point(740, 643);
             this.btnReset.Name = "btnReset";
             this.btnReset.Size = new System.Drawing.Size(92, 31);
             this.btnReset.TabIndex = 133;
@@ -168,7 +151,7 @@ namespace quanlynhankhau
             // dgv
             // 
             this.dgv.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgv.Location = new System.Drawing.Point(103, 258);
+            this.dgv.Location = new System.Drawing.Point(100, 227);
             this.dgv.Name = "dgv";
             this.dgv.RowHeadersWidth = 51;
             this.dgv.RowTemplate.Height = 24;
@@ -178,26 +161,26 @@ namespace quanlynhankhau
             // 
             // txtSearch
             // 
-            this.txtSearch.Location = new System.Drawing.Point(622, 210);
+            this.txtSearch.Location = new System.Drawing.Point(538, 189);
             this.txtSearch.Name = "txtSearch";
-            this.txtSearch.Size = new System.Drawing.Size(178, 22);
+            this.txtSearch.Size = new System.Drawing.Size(196, 22);
             this.txtSearch.TabIndex = 128;
             // 
             // btnSearch
             // 
             this.btnSearch.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSearch.Location = new System.Drawing.Point(819, 188);
+            this.btnSearch.Location = new System.Drawing.Point(740, 167);
             this.btnSearch.Name = "btnSearch";
-            this.btnSearch.Size = new System.Drawing.Size(152, 44);
+            this.btnSearch.Size = new System.Drawing.Size(228, 44);
             this.btnSearch.TabIndex = 131;
-            this.btnSearch.Text = "Tìm kiếm theo tên";
+            this.btnSearch.Text = "Tìm kiếm tên thân nhân";
             this.btnSearch.UseVisualStyleBackColor = true;
             this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
             // 
             // btnDelete
             // 
             this.btnDelete.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnDelete.Location = new System.Drawing.Point(876, 628);
+            this.btnDelete.Location = new System.Drawing.Point(876, 606);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(92, 31);
             this.btnDelete.TabIndex = 130;
@@ -208,7 +191,7 @@ namespace quanlynhankhau
             // btnUpdate
             // 
             this.btnUpdate.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnUpdate.Location = new System.Drawing.Point(740, 628);
+            this.btnUpdate.Location = new System.Drawing.Point(740, 606);
             this.btnUpdate.Name = "btnUpdate";
             this.btnUpdate.Size = new System.Drawing.Size(92, 31);
             this.btnUpdate.TabIndex = 129;
@@ -219,7 +202,7 @@ namespace quanlynhankhau
             // btnAdd
             // 
             this.btnAdd.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAdd.Location = new System.Drawing.Point(592, 628);
+            this.btnAdd.Location = new System.Drawing.Point(592, 606);
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new System.Drawing.Size(92, 31);
             this.btnAdd.TabIndex = 127;
@@ -227,18 +210,63 @@ namespace quanlynhankhau
             this.btnAdd.UseVisualStyleBackColor = true;
             this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
             // 
+            // dtpNS
+            // 
+            this.dtpNS.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtpNS.Location = new System.Drawing.Point(622, 90);
+            this.dtpNS.Margin = new System.Windows.Forms.Padding(4);
+            this.dtpNS.Name = "dtpNS";
+            this.dtpNS.Size = new System.Drawing.Size(188, 22);
+            this.dtpNS.TabIndex = 146;
+            // 
+            // radioButtonNam
+            // 
+            this.radioButtonNam.AutoSize = true;
+            this.radioButtonNam.Checked = true;
+            this.radioButtonNam.Location = new System.Drawing.Point(3, 21);
+            this.radioButtonNam.Name = "radioButtonNam";
+            this.radioButtonNam.Size = new System.Drawing.Size(58, 21);
+            this.radioButtonNam.TabIndex = 148;
+            this.radioButtonNam.TabStop = true;
+            this.radioButtonNam.Text = "Nam";
+            this.radioButtonNam.UseVisualStyleBackColor = true;
+            // 
+            // radioButtonNu
+            // 
+            this.radioButtonNu.AutoSize = true;
+            this.radioButtonNu.Location = new System.Drawing.Point(77, 21);
+            this.radioButtonNu.Name = "radioButtonNu";
+            this.radioButtonNu.Size = new System.Drawing.Size(47, 21);
+            this.radioButtonNu.TabIndex = 149;
+            this.radioButtonNu.Text = "Nữ";
+            this.radioButtonNu.UseVisualStyleBackColor = true;
+            // 
+            // groupBoxGender
+            // 
+            this.groupBoxGender.Controls.Add(this.radioButtonNu);
+            this.groupBoxGender.Controls.Add(this.radioButtonNam);
+            this.groupBoxGender.Location = new System.Drawing.Point(622, 21);
+            this.groupBoxGender.Name = "groupBoxGender";
+            this.groupBoxGender.Size = new System.Drawing.Size(188, 53);
+            this.groupBoxGender.TabIndex = 150;
+            this.groupBoxGender.TabStop = false;
+            this.groupBoxGender.Text = "Giới tính";
+            // 
+            // errorProvider1
+            // 
+            this.errorProvider1.ContainerControl = this;
+            // 
             // ThanNhan
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1074, 749);
+            this.Controls.Add(this.groupBoxGender);
+            this.Controls.Add(this.dtpNS);
             this.Controls.Add(this.txtHoTen);
             this.Controls.Add(this.label6);
-            this.Controls.Add(this.txtGioiTinh);
-            this.Controls.Add(this.label2);
             this.Controls.Add(this.txtMaThanNhan);
             this.Controls.Add(this.label5);
-            this.Controls.Add(this.txtNgaySinh);
             this.Controls.Add(this.txtQuanHeVoiChuHo);
             this.Controls.Add(this.txtMaHoGD);
             this.Controls.Add(this.label4);
@@ -255,6 +283,9 @@ namespace quanlynhankhau
             this.Text = "ThanNhan";
             this.Load += new System.EventHandler(this.ThanNhan_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgv)).EndInit();
+            this.groupBoxGender.ResumeLayout(false);
+            this.groupBoxGender.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -264,11 +295,8 @@ namespace quanlynhankhau
 
         private System.Windows.Forms.TextBox txtHoTen;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.TextBox txtGioiTinh;
-        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox txtMaThanNhan;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TextBox txtNgaySinh;
         private System.Windows.Forms.TextBox txtQuanHeVoiChuHo;
         private System.Windows.Forms.TextBox txtMaHoGD;
         private System.Windows.Forms.Label label4;
@@ -281,5 +309,10 @@ namespace quanlynhankhau
         private System.Windows.Forms.Button btnDelete;
         private System.Windows.Forms.Button btnUpdate;
         private System.Windows.Forms.Button btnAdd;
+        private System.Windows.Forms.DateTimePicker dtpNS;
+        private System.Windows.Forms.RadioButton radioButtonNam;
+        private System.Windows.Forms.RadioButton radioButtonNu;
+        private System.Windows.Forms.GroupBox groupBoxGender;
+        private System.Windows.Forms.ErrorProvider errorProvider1;
     }
 }

@@ -13,3 +13,4 @@ F:\quanlynhankhau\quanlynhankhau\quanlynhankhau\obj\Debug\quanlynhankhau.csproj.
 F:\quanlynhankhau\quanlynhankhau\quanlynhankhau\obj\Debug\quanlynhankhau.exe
 F:\quanlynhankhau\quanlynhankhau\quanlynhankhau\obj\Debug\quanlynhankhau.pdb
 F:\quanlynhankhau\quanlynhankhau\quanlynhankhau\obj\Debug\quanlynhankhau.csproj.AssemblyReference.cache
+F:\quanlynhankhau\quanlynhankhau\quanlynhankhau\obj\Debug\quanlynhankhau.TrangChu.resources

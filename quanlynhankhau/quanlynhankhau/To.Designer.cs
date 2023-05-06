@@ -29,6 +29,7 @@ namespace quanlynhankhau
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.txtCBCA = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.btnReset = new System.Windows.Forms.Button();
@@ -48,7 +49,9 @@ namespace quanlynhankhau
             this.btnAdd = new System.Windows.Forms.Button();
             this.txtTenTo = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
+            this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.dgv)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.SuspendLayout();
             // 
             // txtCBCA
@@ -57,6 +60,7 @@ namespace quanlynhankhau
             this.txtCBCA.Name = "txtCBCA";
             this.txtCBCA.Size = new System.Drawing.Size(188, 22);
             this.txtCBCA.TabIndex = 112;
+            this.txtCBCA.Validating += new System.ComponentModel.CancelEventHandler(this.txtCBCA_Validating);
             // 
             // label2
             // 
@@ -114,6 +118,7 @@ namespace quanlynhankhau
             this.txtToTruong.Name = "txtToTruong";
             this.txtToTruong.Size = new System.Drawing.Size(188, 22);
             this.txtToTruong.TabIndex = 106;
+            this.txtToTruong.Validating += new System.ComponentModel.CancelEventHandler(this.txtToTruong_Validating);
             // 
             // txtSDT
             // 
@@ -121,6 +126,7 @@ namespace quanlynhankhau
             this.txtSDT.Name = "txtSDT";
             this.txtSDT.Size = new System.Drawing.Size(188, 22);
             this.txtSDT.TabIndex = 105;
+            this.txtSDT.Validating += new System.ComponentModel.CancelEventHandler(this.txtSDT_Validating);
             // 
             // txtMaPhuong
             // 
@@ -161,7 +167,7 @@ namespace quanlynhankhau
             // 
             // txtSearch
             // 
-            this.txtSearch.Location = new System.Drawing.Point(586, 214);
+            this.txtSearch.Location = new System.Drawing.Point(573, 211);
             this.txtSearch.Name = "txtSearch";
             this.txtSearch.Size = new System.Drawing.Size(178, 22);
             this.txtSearch.TabIndex = 97;
@@ -169,11 +175,11 @@ namespace quanlynhankhau
             // btnSearch
             // 
             this.btnSearch.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSearch.Location = new System.Drawing.Point(783, 192);
+            this.btnSearch.Location = new System.Drawing.Point(770, 189);
             this.btnSearch.Name = "btnSearch";
-            this.btnSearch.Size = new System.Drawing.Size(152, 44);
+            this.btnSearch.Size = new System.Drawing.Size(165, 44);
             this.btnSearch.TabIndex = 100;
-            this.btnSearch.Text = "Tìm kiếm theo tên";
+            this.btnSearch.Text = "Tìm kiếm tên tổ";
             this.btnSearch.UseVisualStyleBackColor = true;
             this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
             // 
@@ -216,6 +222,7 @@ namespace quanlynhankhau
             this.txtTenTo.Name = "txtTenTo";
             this.txtTenTo.Size = new System.Drawing.Size(188, 22);
             this.txtTenTo.TabIndex = 114;
+            this.txtTenTo.Validating += new System.ComponentModel.CancelEventHandler(this.txtTenTo_Validating);
             // 
             // label6
             // 
@@ -226,6 +233,10 @@ namespace quanlynhankhau
             this.label6.Size = new System.Drawing.Size(66, 20);
             this.label6.TabIndex = 113;
             this.label6.Text = "Tên tổ: ";
+            // 
+            // errorProvider1
+            // 
+            this.errorProvider1.ContainerControl = this;
             // 
             // To
             // 
@@ -255,6 +266,7 @@ namespace quanlynhankhau
             this.Text = "To";
             this.Load += new System.EventHandler(this.To_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgv)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -281,5 +293,6 @@ namespace quanlynhankhau
         private System.Windows.Forms.Button btnAdd;
         private System.Windows.Forms.TextBox txtTenTo;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.ErrorProvider errorProvider1;
     }
 }

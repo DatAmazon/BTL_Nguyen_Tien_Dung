@@ -16,7 +16,7 @@ namespace quanlynhankhau
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new ThanNhan());
+            Application.Run(new TrangChu());
         }
     }
 }

@@ -6,6 +6,7 @@ using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -21,27 +22,22 @@ namespace quanlynhankhau
         }
         public void layDS()
         {
-            try
+
+            using (SqlConnection Cnn = new SqlConnection(connectionString))
             {
-                using (SqlConnection Cnn = new SqlConnection(connectionString))
+                using (SqlCommand Cmd = new SqlCommand("select * from tblTo", Cnn))
                 {
-                    using (SqlCommand Cmd = new SqlCommand("select * from tblTo", Cnn))
+                    Cmd.CommandType = CommandType.Text;
+                    Cnn.Open();
+                    using (SqlDataAdapter da = new SqlDataAdapter(Cmd))
                     {
-                        Cmd.CommandType = CommandType.Text;
-                        Cnn.Open();
-                        using (SqlDataAdapter da = new SqlDataAdapter(Cmd))
-                        {
-                            DataTable dt = new DataTable();
-                            da.Fill(dt);
-                            dgv.DataSource = dt;
-                        }
-                        Cnn.Close();
+                        DataTable dt = new DataTable();
+                        da.Fill(dt);
+                        dgv.DataSource = dt;
                     }
+                    Cnn.Close();
                 }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
             }
         }
         public void resetForm()
@@ -64,7 +60,7 @@ namespace quanlynhankhau
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            try
+            if (ValidateChildren(ValidationConstraints.Enabled))
             {
                 using (SqlConnection Cnn = new SqlConnection(connectionString))
                 {
@@ -95,18 +91,8 @@ namespace quanlynhankhau
                     }
                 }
             }
-            catch (System.FormatException ex)
-            {
-                MessageBox.Show("Bạn phải điền đủ các trường dữ liệu", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+
         }
-
-
-
 
         private void dgv_CellClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -120,33 +106,36 @@ namespace quanlynhankhau
         }
         private void btnUpdate_Click(object sender, EventArgs e)
         {
-            using (SqlConnection Cnn = new SqlConnection(connectionString))
+            if (ValidateChildren(ValidationConstraints.Enabled))
             {
-                using (SqlCommand Cmd = new SqlCommand())
+                using (SqlConnection Cnn = new SqlConnection(connectionString))
                 {
-                    Cmd.Connection = Cnn;
-                    Cmd.CommandType = CommandType.StoredProcedure;
-                    Cmd.CommandText = "SuaTo";
-                    Cnn.Open();
-                    Cmd.Parameters.AddWithValue("@maTo", txtMaTo.Text);
-                    Cmd.Parameters.AddWithValue("@maPhuong", txtMaPhuong.Text);
-                    Cmd.Parameters.AddWithValue("@tenTo", txtTenTo.Text);
-                    Cmd.Parameters.AddWithValue("@cbca", txtCBCA.Text);
-                    Cmd.Parameters.AddWithValue("@toTruong", txtToTruong.Text);
-                    Cmd.Parameters.AddWithValue("@sdt", txtSDT.Text);
-                    //thêm sửa xóa có thay đổi gì trong db k?
-                    int i = Cmd.ExecuteNonQuery();
-                    if (i == 0)
+                    using (SqlCommand Cmd = new SqlCommand())
                     {
-                        MessageBox.Show("Sửa thất bại");
+                        Cmd.Connection = Cnn;
+                        Cmd.CommandType = CommandType.StoredProcedure;
+                        Cmd.CommandText = "SuaTo";
+                        Cnn.Open();
+                        Cmd.Parameters.AddWithValue("@maTo", txtMaTo.Text);
+                        Cmd.Parameters.AddWithValue("@maPhuong", txtMaPhuong.Text);
+                        Cmd.Parameters.AddWithValue("@tenTo", txtTenTo.Text);
+                        Cmd.Parameters.AddWithValue("@cbca", txtCBCA.Text);
+                        Cmd.Parameters.AddWithValue("@toTruong", txtToTruong.Text);
+                        Cmd.Parameters.AddWithValue("@sdt", txtSDT.Text);
+                        //thêm sửa xóa có thay đổi gì trong db k?
+                        int i = Cmd.ExecuteNonQuery();
+                        if (i == 0)
+                        {
+                            MessageBox.Show("Sửa thất bại");
+                        }
+                        else
+                        {
+                            MessageBox.Show("Sửa thành công");
+                        }
+                        Cnn.Close();
+                        resetForm();
+                        layDS();
                     }
-                    else
-                    {
-                        MessageBox.Show("Sửa thành công");
-                    }
-                    Cnn.Close();
-                    resetForm();
-                    layDS();
                 }
             }
         }
@@ -225,5 +214,81 @@ namespace quanlynhankhau
             resetForm();
         }
 
+
+        private void txtTenTo_Validating(object sender, CancelEventArgs e)
+        {
+            if (txtTenTo.Text.Trim() == "")
+            {
+                e.Cancel = true;
+                errorProvider1.SetError(txtTenTo, "Tên tổ không được để trống!");
+            }
+            else if (!Regex.IsMatch(txtTenTo.Text.Trim(), @"^[A-z,0-9]+$"))
+            {
+                e.Cancel = true;
+                errorProvider1.SetError(txtTenTo, "Tên tổ không được sử dụng ký tự đặc biệt!");
+            }
+            else
+            {
+                e.Cancel = false;
+                errorProvider1.SetError(txtTenTo, "");
+            }
+        }
+
+        private void txtCBCA_Validating(object sender, CancelEventArgs e)
+        {
+            if (txtCBCA.Text.Trim() == "")
+            {
+                e.Cancel = true;
+                errorProvider1.SetError(txtCBCA, "CBCA không được để trống!");
+            }
+            else if (!Regex.IsMatch(txtCBCA.Text.Trim(), @"^[A-z,0-9]+$"))
+            {
+                e.Cancel = true;
+                errorProvider1.SetError(txtCBCA, "CBCA không được sử dụng ký tự đặc biệt!");
+            }
+            else
+            {
+                e.Cancel = false;
+                errorProvider1.SetError(txtCBCA, "");
+            }
+        }
+
+        private void txtToTruong_Validating(object sender, CancelEventArgs e)
+        {
+            if (txtToTruong.Text.Trim() == "")
+            {
+                e.Cancel = true;
+                errorProvider1.SetError(txtToTruong, "Tổ trưởng không được để trống!");
+            }
+            else if (!Regex.IsMatch(txtToTruong.Text.Trim(), @"^[A-z,0-9]+$"))
+            {
+                e.Cancel = true;
+                errorProvider1.SetError(txtToTruong, "Tổ trưởng không được sử dụng ký tự đặc biệt!");
+            }
+            else
+            {
+                e.Cancel = false;
+                errorProvider1.SetError(txtToTruong, "");
+            }
+        }
+
+        private void txtSDT_Validating(object sender, CancelEventArgs e)
+        {
+            if (txtSDT.Text.Trim() == "")
+            {
+                e.Cancel = true;
+                errorProvider1.SetError(txtSDT, "SĐT không được để trống!");
+            }
+            else if (!Regex.IsMatch(txtSDT.Text.Trim(), "^0\\d{9,10}$"))
+            {
+                e.Cancel = true;
+                errorProvider1.SetError(txtSDT, "SĐT không đúng định dạng!");
+            }
+            else
+            {
+                e.Cancel = false;
+                errorProvider1.SetError(txtSDT, "");
+            }
+        }
     }
 }

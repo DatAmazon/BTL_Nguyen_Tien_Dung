@@ -6,6 +6,7 @@ using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -59,7 +60,7 @@ namespace quanlynhankhau
         }
         private void btnAdd_Click_1(object sender, EventArgs e)
         {
-            try
+            if (ValidateChildren(ValidationConstraints.Enabled))
             {
                 using (SqlConnection Cnn = new SqlConnection(connectionString))
                 {
@@ -88,14 +89,6 @@ namespace quanlynhankhau
                     }
                 }
             }
-            catch (System.FormatException ex)
-            {
-                MessageBox.Show("Bạn phải điền đủ các trường dữ liệu", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
         }
 
         private void dgv_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -108,31 +101,34 @@ namespace quanlynhankhau
         }
         private void btnUpdate_Click(object sender, EventArgs e)
         {
-            using (SqlConnection Cnn = new SqlConnection(connectionString))
+            if (ValidateChildren(ValidationConstraints.Enabled))
             {
-                using (SqlCommand Cmd = new SqlCommand())
+                using (SqlConnection Cnn = new SqlConnection(connectionString))
                 {
-                    Cmd.Connection = Cnn;
-                    Cmd.CommandType = CommandType.StoredProcedure;
-                    Cmd.CommandText = "SuaQuan";
-                    Cnn.Open();
-                    Cmd.Parameters.AddWithValue("@maQuan", txtMaQuan.Text);
-                    Cmd.Parameters.AddWithValue("@tenQuan", txtTenQuan.Text);
-                    Cmd.Parameters.AddWithValue("@chuTich", txtChuTich.Text);
-                    Cmd.Parameters.AddWithValue("@sdt", txtSDT.Text);
-                    //thêm sửa xóa có thay đổi gì trong db k?
-                    int i = Cmd.ExecuteNonQuery();
-                    if (i == 0)
+                    using (SqlCommand Cmd = new SqlCommand())
                     {
-                        MessageBox.Show("Sửa thất bại");
+                        Cmd.Connection = Cnn;
+                        Cmd.CommandType = CommandType.StoredProcedure;
+                        Cmd.CommandText = "SuaQuan";
+                        Cnn.Open();
+                        Cmd.Parameters.AddWithValue("@maQuan", txtMaQuan.Text);
+                        Cmd.Parameters.AddWithValue("@tenQuan", txtTenQuan.Text);
+                        Cmd.Parameters.AddWithValue("@chuTich", txtChuTich.Text);
+                        Cmd.Parameters.AddWithValue("@sdt", txtSDT.Text);
+                        //thêm sửa xóa có thay đổi gì trong db k?
+                        int i = Cmd.ExecuteNonQuery();
+                        if (i == 0)
+                        {
+                            MessageBox.Show("Sửa thất bại");
+                        }
+                        else
+                        {
+                            MessageBox.Show("Sửa thành công");
+                        }
+                        Cnn.Close();
+                        resetForm();
+                        layDS();
                     }
-                    else
-                    {
-                        MessageBox.Show("Sửa thành công");
-                    }
-                    Cnn.Close();
-                    resetForm();
-                    layDS();
                 }
             }
         }
@@ -207,6 +203,63 @@ namespace quanlynhankhau
         {
             layDS();
             resetForm();
+        }
+
+        private void txtTenQuan_Validating(object sender, CancelEventArgs e)
+        {
+            if (txtTenQuan.Text.Trim() == "")
+            {
+                e.Cancel = true;
+                errorProvider1.SetError(txtTenQuan, "Không được để trống!");
+            }
+            else if (!Regex.IsMatch(txtTenQuan.Text.Trim(), @"^[A-z,0-9]+$"))
+            {
+                e.Cancel = true;
+                errorProvider1.SetError(txtTenQuan, "không được sử dụng ký tự đặc biệt!");
+            }
+            else
+            {
+                e.Cancel = false;
+                errorProvider1.SetError(txtTenQuan, "");
+            }
+        }
+
+        private void txtChuTich_Validating(object sender, CancelEventArgs e)
+        {
+            if (txtChuTich.Text.Trim() == "")
+            {
+                e.Cancel = true;
+                errorProvider1.SetError(txtChuTich, "Không được để trống!");
+            }
+            else if (!Regex.IsMatch(txtChuTich.Text.Trim(), @"^[A-z,0-9]+$"))
+            {
+                e.Cancel = true;
+                errorProvider1.SetError(txtChuTich, "không được sử dụng ký tự đặc biệt!");
+            }
+            else
+            {
+                e.Cancel = false;
+                errorProvider1.SetError(txtChuTich, "");
+            }
+        }
+
+        private void txtSDT_Validating(object sender, CancelEventArgs e)
+        {
+            if (txtSDT.Text.Trim() == "")
+            {
+                e.Cancel = true;
+                errorProvider1.SetError(txtSDT, "Không được để trống!");
+            }
+            else if (!Regex.IsMatch(txtSDT.Text.Trim(), "^0\\d{9,10}$"))
+            {
+                e.Cancel = true;
+                errorProvider1.SetError(txtSDT, "số điện thoại không đúng định dạng!");
+            }
+            else
+            {
+                e.Cancel = false;
+                errorProvider1.SetError(txtSDT, "");
+            }
         }
     }
 }

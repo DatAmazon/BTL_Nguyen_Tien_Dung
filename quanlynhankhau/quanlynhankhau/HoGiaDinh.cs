@@ -6,6 +6,7 @@ using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -28,27 +29,20 @@ namespace quanlynhankhau
 
         public void layDS()
         {
-            try
+            using (SqlConnection Cnn = new SqlConnection(connectionString))
             {
-                using (SqlConnection Cnn = new SqlConnection(connectionString))
+                using (SqlCommand Cmd = new SqlCommand("select * from tblHoGiaDinh", Cnn))
                 {
-                    using (SqlCommand Cmd = new SqlCommand("select * from tblHoGiaDinh", Cnn))
+                    Cmd.CommandType = CommandType.Text;
+                    Cnn.Open();
+                    using (SqlDataAdapter da = new SqlDataAdapter(Cmd))
                     {
-                        Cmd.CommandType = CommandType.Text;
-                        Cnn.Open();
-                        using (SqlDataAdapter da = new SqlDataAdapter(Cmd))
-                        {
-                            DataTable dt = new DataTable();
-                            da.Fill(dt);
-                            dgv.DataSource = dt;
-                        }
-                        Cnn.Close();
+                        DataTable dt = new DataTable();
+                        da.Fill(dt);
+                        dgv.DataSource = dt;
                     }
+                    Cnn.Close();
                 }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
         public void resetForm()
@@ -56,8 +50,8 @@ namespace quanlynhankhau
             txtMaHo.Clear();
             txtMaTo.Clear();
             txtTenChuHo.Clear();
-            txtGioiTinh.Clear();
-            txtNgayTinh.Clear();
+            radioButtonNam.Checked = true;
+            dtpNS.Value = DateTime.Now;
 
             //dtp.Value = DateTime.Now;
             txtSDT.Clear();
@@ -72,7 +66,7 @@ namespace quanlynhankhau
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            try
+            if (ValidateChildren(ValidationConstraints.Enabled))
             {
                 using (SqlConnection Cnn = new SqlConnection(connectionString))
                 {
@@ -86,8 +80,17 @@ namespace quanlynhankhau
                         Cmd.Parameters.AddWithValue("@maTo", txtMaTo.Text);
                         Cmd.Parameters.AddWithValue("@hoTen", txtTenChuHo.Text);
                         Cmd.Parameters.AddWithValue("@sdt", txtSDT.Text);
-                        Cmd.Parameters.AddWithValue("@gioiTinh", txtGioiTinh.Text);
-                        Cmd.Parameters.AddWithValue("@ngaySinh", txtNgayTinh.Text);
+                        string gioiTinh = "";
+                        if (radioButtonNam.Checked)
+                        {
+                            gioiTinh = "Nam";
+                        }
+                        else if (radioButtonNu.Checked)
+                        {
+                            gioiTinh = "Nữ";
+                        }
+                        Cmd.Parameters.AddWithValue("@gioiTinh", gioiTinh);
+                        Cmd.Parameters.AddWithValue("@ngaySinh", dtpNS.Value);
                         Cmd.Parameters.AddWithValue("@soNha", txtSoNha.Text);
                         //thêm sửa xóa có thay đổi gì trong db k?
                         int i = Cmd.ExecuteNonQuery();
@@ -105,14 +108,6 @@ namespace quanlynhankhau
                     }
                 }
             }
-            catch (System.FormatException ex)
-            {
-                MessageBox.Show("Bạn phải điền đủ các trường dữ liệu", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
         }
 
 
@@ -124,46 +119,69 @@ namespace quanlynhankhau
             txtMaTo.Text = dgv.CurrentRow.Cells["maTo"].Value.ToString();
             txtTenChuHo.Text = dgv.CurrentRow.Cells["hoten"].Value.ToString();
             txtSDT.Text = dgv.CurrentRow.Cells["sdt"].Value.ToString();
-            txtGioiTinh.Text = dgv.CurrentRow.Cells["gioiTinh"].Value.ToString();
-            txtNgayTinh.Text = dgv.CurrentRow.Cells["ngaysinh"].Value.ToString();
+            string gioiTinh = dgv.CurrentRow.Cells["gioiTinh"].Value.ToString();
+            if (gioiTinh == "Nam")
+            {
+                radioButtonNam.Checked = true;
+                radioButtonNu.Checked = false;
+            }
+            else if (gioiTinh == "Nữ")
+            {
+                radioButtonNam.Checked = false;
+                radioButtonNu.Checked = true;
+            }
+
+
+            dtpNS.Text = dgv.CurrentRow.Cells["ngaySinh"].Value.ToString();
             txtSoNha.Text = dgv.CurrentRow.Cells["soNha"].Value.ToString();
 
         }
         private void btnUpdate_Click(object sender, EventArgs e)
         {
-            using (SqlConnection Cnn = new SqlConnection(connectionString))
+            if (ValidateChildren(ValidationConstraints.Enabled))
             {
-                using (SqlCommand Cmd = new SqlCommand())
+                using (SqlConnection Cnn = new SqlConnection(connectionString))
                 {
-                    Cmd.Connection = Cnn;
-                    Cmd.CommandType = CommandType.StoredProcedure;
-                    Cmd.CommandText = "SuaHoGiaDinh";
-                    Cnn.Open();
-                    //@maHoGiaDinh,@maTo, @hoTen, @sdt, @gioiTinh, @ngaySinh, @soNha
-                    Cmd.Parameters.AddWithValue("@maHoGiaDinh", txtMaHo.Text);
-                    Cmd.Parameters.AddWithValue("@maTo", txtMaTo.Text);
-                    Cmd.Parameters.AddWithValue("@hoTen", txtTenChuHo.Text);
-                    Cmd.Parameters.AddWithValue("@sdt", txtSDT.Text);
-                    Cmd.Parameters.AddWithValue("@gioiTinh", txtGioiTinh.Text);
-                    Cmd.Parameters.AddWithValue("@ngaySinh", txtNgayTinh.Text);
-                    Cmd.Parameters.AddWithValue("@soNha", txtSoNha.Text);
-                    //thêm sửa xóa có thay đổi gì trong db k?
-                    int i = Cmd.ExecuteNonQuery();
-                    if (i == 0)
+                    using (SqlCommand Cmd = new SqlCommand())
                     {
-                        MessageBox.Show("Sửa thất bại");
+                        Cmd.Connection = Cnn;
+                        Cmd.CommandType = CommandType.StoredProcedure;
+                        Cmd.CommandText = "SuaHoGiaDinh";
+                        Cnn.Open();
+                        //@maHoGiaDinh,@maTo, @hoTen, @sdt, @gioiTinh, @ngaySinh, @soNha
+                        Cmd.Parameters.AddWithValue("@maHoGiaDinh", txtMaHo.Text);
+                        Cmd.Parameters.AddWithValue("@maTo", txtMaTo.Text);
+                        Cmd.Parameters.AddWithValue("@hoTen", txtTenChuHo.Text);
+                        Cmd.Parameters.AddWithValue("@sdt", txtSDT.Text);
+                        string gioiTinh = "";
+                        if (radioButtonNam.Checked)
+                        {
+                            gioiTinh = "Nam";
+                        }
+                        else if (radioButtonNu.Checked)
+                        {
+                            gioiTinh = "Nữ";
+                        }
+                        Cmd.Parameters.AddWithValue("@gioiTinh", gioiTinh);
+                        Cmd.Parameters.AddWithValue("@ngaySinh", dtpNS.Value);
+                        Cmd.Parameters.AddWithValue("@soNha", txtSoNha.Text);
+                        //thêm sửa xóa có thay đổi gì trong db k?
+                        int i = Cmd.ExecuteNonQuery();
+                        if (i == 0)
+                        {
+                            MessageBox.Show("Sửa thất bại");
+                        }
+                        else
+                        {
+                            MessageBox.Show("Sửa thành công");
+                        }
+                        Cnn.Close();
+                        resetForm();
+                        layDS();
                     }
-                    else
-                    {
-                        MessageBox.Show("Sửa thành công");
-                    }
-                    Cnn.Close();
-                    resetForm();
-                    layDS();
                 }
             }
         }
-
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
@@ -238,5 +256,61 @@ namespace quanlynhankhau
             resetForm();
         }
 
+        private void txtTenChuHo_Validating(object sender, CancelEventArgs e)
+        {
+            if (txtTenChuHo.Text.Trim() == "")
+            {
+                e.Cancel = true;
+                errorProvider1.SetError(txtTenChuHo, "Tên chủ hộ không được để trống!");
+            }
+            else if (!Regex.IsMatch(txtTenChuHo.Text.Trim(), @"^[A-z,0-9]+$"))
+            {
+                e.Cancel = true;
+                errorProvider1.SetError(txtTenChuHo, "Tên chủ hộ không được sử dụng ký tự đặc biệt!");
+            }
+            else
+            {
+                e.Cancel = false;
+                errorProvider1.SetError(txtTenChuHo, "");
+            }
+        }
+
+        private void txtSoNha_Validating(object sender, CancelEventArgs e)
+        {
+            if (txtSoNha.Text.Trim() == "")
+            {
+                e.Cancel = true;
+                errorProvider1.SetError(txtSoNha, "Số nhà không được để trống!");
+            }
+            else if (!Regex.IsMatch(txtSoNha.Text.Trim(), @"^[A-z,0-9]+$"))
+            {
+                e.Cancel = true;
+                errorProvider1.SetError(txtSoNha, "Số nhà không được sử dụng ký tự đặc biệt!");
+            }
+            else
+            {
+                e.Cancel = false;
+                errorProvider1.SetError(txtSoNha, "");
+            }
+        }
+
+        private void txtSDT_Validating(object sender, CancelEventArgs e)
+        {
+            if (txtSDT.Text.Trim() == "")
+            {
+                e.Cancel = true;
+                errorProvider1.SetError(txtSDT, "SĐT không được để trống!");
+            }
+            else if (!Regex.IsMatch(txtSDT.Text.Trim(), "^0\\d{9,10}$"))
+            {
+                e.Cancel = true;
+                errorProvider1.SetError(txtSDT, "SĐT không đúng định dạng!");
+            }
+            else
+            {
+                e.Cancel = false;
+                errorProvider1.SetError(txtSDT, "");
+            }
+        }
     }
 }

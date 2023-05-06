@@ -82,7 +82,7 @@ create proc timkiemtheotenphuong
 as
 	select * from tblPhuong where tenPhuong like N'%'+ @tenPhuong+'%'
 go
-
+exec timkiemtheotenphuong 'y'
 select * from tblPhuong
 go
 ----------------------------------Tổ----------------------------------
@@ -220,10 +220,11 @@ begin
 end
 go
 ---------Tìm kiếm
-create proc timkiemtheotenthanhan
-@hoTen int
+alter proc timkiemtheotenthanhan
+@hoTen nvarchar(50)
 as
 	select * from tblThanNhan where hoTen like N'%'+ @hoTen+'%'
 go
-
+select *from tblThanNhan 
+exec timkiemtheotenthanhan 'a'
 

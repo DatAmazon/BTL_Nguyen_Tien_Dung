@@ -29,6 +29,7 @@ namespace quanlynhankhau
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.btnReset = new System.Windows.Forms.Button();
             this.dgv = new System.Windows.Forms.DataGridView();
             this.txtSearch = new System.Windows.Forms.TextBox();
@@ -38,11 +39,9 @@ namespace quanlynhankhau
             this.btnAdd = new System.Windows.Forms.Button();
             this.txtTenChuHo = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
-            this.txtGioiTinh = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.txtMaHo = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
-            this.txtNgayTinh = new System.Windows.Forms.TextBox();
             this.txtSoNha = new System.Windows.Forms.TextBox();
             this.txtMaTo = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
@@ -50,7 +49,14 @@ namespace quanlynhankhau
             this.label1 = new System.Windows.Forms.Label();
             this.txtSDT = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
+            this.groupBoxGender = new System.Windows.Forms.GroupBox();
+            this.radioButtonNu = new System.Windows.Forms.RadioButton();
+            this.radioButtonNam = new System.Windows.Forms.RadioButton();
+            this.dtpNS = new System.Windows.Forms.DateTimePicker();
+            this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.dgv)).BeginInit();
+            this.groupBoxGender.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.SuspendLayout();
             // 
             // btnReset
@@ -77,7 +83,7 @@ namespace quanlynhankhau
             // 
             // txtSearch
             // 
-            this.txtSearch.Location = new System.Drawing.Point(586, 196);
+            this.txtSearch.Location = new System.Drawing.Point(542, 196);
             this.txtSearch.Name = "txtSearch";
             this.txtSearch.Size = new System.Drawing.Size(178, 22);
             this.txtSearch.TabIndex = 80;
@@ -85,11 +91,11 @@ namespace quanlynhankhau
             // btnSearch
             // 
             this.btnSearch.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSearch.Location = new System.Drawing.Point(783, 174);
+            this.btnSearch.Location = new System.Drawing.Point(726, 174);
             this.btnSearch.Name = "btnSearch";
-            this.btnSearch.Size = new System.Drawing.Size(152, 44);
+            this.btnSearch.Size = new System.Drawing.Size(206, 44);
             this.btnSearch.TabIndex = 83;
-            this.btnSearch.Text = "Tìm kiếm theo tên";
+            this.btnSearch.Text = "Tìm kiếm tên chủ hộ";
             this.btnSearch.UseVisualStyleBackColor = true;
             this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
             // 
@@ -132,6 +138,7 @@ namespace quanlynhankhau
             this.txtTenChuHo.Name = "txtTenChuHo";
             this.txtTenChuHo.Size = new System.Drawing.Size(188, 22);
             this.txtTenChuHo.TabIndex = 126;
+            this.txtTenChuHo.Validating += new System.ComponentModel.CancelEventHandler(this.txtTenChuHo_Validating);
             // 
             // label6
             // 
@@ -142,13 +149,6 @@ namespace quanlynhankhau
             this.label6.Size = new System.Drawing.Size(102, 20);
             this.label6.TabIndex = 125;
             this.label6.Text = "Tên chủ hộ: ";
-            // 
-            // txtGioiTinh
-            // 
-            this.txtGioiTinh.Location = new System.Drawing.Point(510, 38);
-            this.txtGioiTinh.Name = "txtGioiTinh";
-            this.txtGioiTinh.Size = new System.Drawing.Size(188, 22);
-            this.txtGioiTinh.TabIndex = 124;
             // 
             // label2
             // 
@@ -178,19 +178,13 @@ namespace quanlynhankhau
             this.label5.TabIndex = 121;
             this.label5.Text = "Mã hộ: ";
             // 
-            // txtNgayTinh
-            // 
-            this.txtNgayTinh.Location = new System.Drawing.Point(510, 74);
-            this.txtNgayTinh.Name = "txtNgayTinh";
-            this.txtNgayTinh.Size = new System.Drawing.Size(188, 22);
-            this.txtNgayTinh.TabIndex = 120;
-            // 
             // txtSoNha
             // 
             this.txtSoNha.Location = new System.Drawing.Point(510, 110);
             this.txtSoNha.Name = "txtSoNha";
             this.txtSoNha.Size = new System.Drawing.Size(188, 22);
             this.txtSoNha.TabIndex = 119;
+            this.txtSoNha.Validating += new System.ComponentModel.CancelEventHandler(this.txtSoNha_Validating);
             // 
             // txtMaTo
             // 
@@ -235,6 +229,7 @@ namespace quanlynhankhau
             this.txtSDT.Name = "txtSDT";
             this.txtSDT.Size = new System.Drawing.Size(188, 22);
             this.txtSDT.TabIndex = 128;
+            this.txtSDT.Validating += new System.ComponentModel.CancelEventHandler(this.txtSDT_Validating);
             // 
             // label7
             // 
@@ -246,20 +241,66 @@ namespace quanlynhankhau
             this.label7.TabIndex = 127;
             this.label7.Text = "SDT: ";
             // 
+            // groupBoxGender
+            // 
+            this.groupBoxGender.Controls.Add(this.radioButtonNu);
+            this.groupBoxGender.Controls.Add(this.radioButtonNam);
+            this.groupBoxGender.Location = new System.Drawing.Point(510, 5);
+            this.groupBoxGender.Name = "groupBoxGender";
+            this.groupBoxGender.Size = new System.Drawing.Size(188, 53);
+            this.groupBoxGender.TabIndex = 152;
+            this.groupBoxGender.TabStop = false;
+            this.groupBoxGender.Text = "Giới tính";
+            // 
+            // radioButtonNu
+            // 
+            this.radioButtonNu.AutoSize = true;
+            this.radioButtonNu.Location = new System.Drawing.Point(77, 21);
+            this.radioButtonNu.Name = "radioButtonNu";
+            this.radioButtonNu.Size = new System.Drawing.Size(47, 21);
+            this.radioButtonNu.TabIndex = 149;
+            this.radioButtonNu.Text = "Nữ";
+            this.radioButtonNu.UseVisualStyleBackColor = true;
+            // 
+            // radioButtonNam
+            // 
+            this.radioButtonNam.AutoSize = true;
+            this.radioButtonNam.Checked = true;
+            this.radioButtonNam.Location = new System.Drawing.Point(3, 21);
+            this.radioButtonNam.Name = "radioButtonNam";
+            this.radioButtonNam.Size = new System.Drawing.Size(58, 21);
+            this.radioButtonNam.TabIndex = 148;
+            this.radioButtonNam.TabStop = true;
+            this.radioButtonNam.Text = "Nam";
+            this.radioButtonNam.UseVisualStyleBackColor = true;
+            // 
+            // dtpNS
+            // 
+            this.dtpNS.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtpNS.Location = new System.Drawing.Point(510, 74);
+            this.dtpNS.Margin = new System.Windows.Forms.Padding(4);
+            this.dtpNS.Name = "dtpNS";
+            this.dtpNS.Size = new System.Drawing.Size(188, 22);
+            this.dtpNS.TabIndex = 151;
+            // 
+            // errorProvider1
+            // 
+            this.errorProvider1.ContainerControl = this;
+            // 
             // HoGiaDinh
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1180, 718);
+            this.Controls.Add(this.groupBoxGender);
+            this.Controls.Add(this.dtpNS);
             this.Controls.Add(this.txtSDT);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.txtTenChuHo);
             this.Controls.Add(this.label6);
-            this.Controls.Add(this.txtGioiTinh);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.txtMaHo);
             this.Controls.Add(this.label5);
-            this.Controls.Add(this.txtNgayTinh);
             this.Controls.Add(this.txtSoNha);
             this.Controls.Add(this.txtMaTo);
             this.Controls.Add(this.label4);
@@ -276,6 +317,9 @@ namespace quanlynhankhau
             this.Text = "HoGiaDinh";
             this.Load += new System.EventHandler(this.HoGiaDinh_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgv)).EndInit();
+            this.groupBoxGender.ResumeLayout(false);
+            this.groupBoxGender.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -290,11 +334,9 @@ namespace quanlynhankhau
         private System.Windows.Forms.Button btnUpdate;
         private System.Windows.Forms.Button btnAdd;
         private System.Windows.Forms.TextBox txtTenChuHo;
-        private System.Windows.Forms.TextBox txtGioiTinh;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox txtMaHo;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TextBox txtNgayTinh;
         private System.Windows.Forms.TextBox txtSoNha;
         private System.Windows.Forms.TextBox txtMaTo;
         private System.Windows.Forms.Label label4;
@@ -303,5 +345,10 @@ namespace quanlynhankhau
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox txtSDT;
         private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.GroupBox groupBoxGender;
+        private System.Windows.Forms.RadioButton radioButtonNu;
+        private System.Windows.Forms.RadioButton radioButtonNam;
+        private System.Windows.Forms.DateTimePicker dtpNS;
+        private System.Windows.Forms.ErrorProvider errorProvider1;
     }
 }
