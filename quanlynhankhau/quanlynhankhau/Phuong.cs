@@ -24,7 +24,29 @@ namespace quanlynhankhau
         private void Phuong_Load(object sender, EventArgs e)
         {
             layDS();
-
+            LayQuan();
+            
+        }
+        public void LayQuan()
+        {
+            using (SqlConnection Cnn = new SqlConnection(connectionString))
+            {
+                using (SqlCommand Cmd = new SqlCommand("select maQuan,tenQuan from tblQuan", Cnn))
+                {
+                    Cmd.CommandType = CommandType.Text;
+                    Cnn.Open();
+                    using (SqlDataAdapter da = new SqlDataAdapter(Cmd))
+                    {
+                        DataTable dt = new DataTable();
+                        da.Fill(dt);
+                        ListQuan.DataSource = dt;
+                        ListQuan.ValueMember = "maQuan";
+                        ListQuan.DisplayMember = "tenQuan";
+                        //ListQuan.da
+                    }
+                    Cnn.Close();
+                }
+            }
         }
         public void layDS()
         {
@@ -49,7 +71,7 @@ namespace quanlynhankhau
         public void resetForm()
         {
             txtMaPhuong.Clear();
-            txtMaQuan.Clear();
+            //txtMaQuan.Clear();
             txtTenPhuong.Clear();
             //dtp.Value = DateTime.Now;
             txtSDT.Clear();
@@ -68,7 +90,8 @@ namespace quanlynhankhau
                         Cmd.CommandType = CommandType.StoredProcedure;
                         Cmd.CommandText = "themPhuong";
                         Cnn.Open();
-                        Cmd.Parameters.AddWithValue("@maQuan", txtMaQuan.Text);
+                        //Cmd.Parameters.AddWithValue("@maQuan", txtMaQuan.Text);
+                        Cmd.Parameters.AddWithValue("@maQuan", ListQuan.SelectedValue.ToString());
                         Cmd.Parameters.AddWithValue("@tenPhuong", txtTenPhuong.Text);
                         Cmd.Parameters.AddWithValue("@chuTich", txtToTruong.Text);
                         Cmd.Parameters.AddWithValue("@sdt", txtSDT.Text);
@@ -97,11 +120,23 @@ namespace quanlynhankhau
         private void dgv_CellClick_1(object sender, DataGridViewCellEventArgs e)
         {
             txtMaPhuong.Text = dgv.CurrentRow.Cells["maPhuong"].Value.ToString();
-            txtMaQuan.Text = dgv.CurrentRow.Cells["maQuan"].Value.ToString();
+            //txtMaQuan.Text = dgv.CurrentRow.Cells["maQuan"].Value.ToString();
             txtTenPhuong.Text = dgv.CurrentRow.Cells["tenPhuong"].Value.ToString();
             txtToTruong.Text = dgv.CurrentRow.Cells["chuTich"].Value.ToString();
             txtSDT.Text = dgv.CurrentRow.Cells["SDT"].Value.ToString();
-
+            String maquan = dgv.CurrentRow.Cells["maQuan"].Value.ToString();
+          //  ListQuan.SelectedIndex = ListQuan.FindString(maquan);
+          
+            for (int i = 0; i < ListQuan.Items.Count; i++)
+            {
+               ListQuan.SelectedIndex = i;
+               int value = (int)ListQuan.SelectedValue;
+                if (value.ToString().Equals(maquan))
+                    {
+                    break;
+                    }
+                      
+            }
         }
         private void btnUpdate_Click_1(object sender, EventArgs e)
         {
@@ -116,10 +151,11 @@ namespace quanlynhankhau
                         Cmd.CommandText = "SuaPhuong";
                         Cnn.Open();
                         Cmd.Parameters.AddWithValue("@maPhuong", txtMaPhuong.Text);
-                        Cmd.Parameters.AddWithValue("@maQuan", txtMaQuan.Text);
+                        Cmd.Parameters.AddWithValue("@maQuan", ListQuan.SelectedValue.ToString());
                         Cmd.Parameters.AddWithValue("@tenPhuong", txtTenPhuong.Text);
                         Cmd.Parameters.AddWithValue("@chuTich", txtToTruong.Text);
                         Cmd.Parameters.AddWithValue("@sdt", txtSDT.Text);
+                        //listQuan.selectedValue
                         //thêm sửa xóa có thay đổi gì trong db k?
                         int i = Cmd.ExecuteNonQuery();
                         if (i == 0)
@@ -220,11 +256,11 @@ namespace quanlynhankhau
                 e.Cancel = true;
                 errorProvider1.SetError(txtTenPhuong, "Tên phường không được để trống!");
             }
-            else if (!Regex.IsMatch(txtTenPhuong.Text.Trim(), @"^[A-z,0-9]+$"))
-            {
-                e.Cancel = true;
-                errorProvider1.SetError(txtTenPhuong, "Tên phường không được sử dụng ký tự đặc biệt!");
-            }
+            //else if (!Regex.IsMatch(txtTenPhuong.Text.Trim(), @"^[A-z,0-9]+$"))
+            //{
+            //    e.Cancel = true;
+            //    errorProvider1.SetError(txtTenPhuong, "Tên phường không được sử dụng ký tự đặc biệt!");
+            //}
             else
             {
                 e.Cancel = false;
@@ -239,11 +275,11 @@ namespace quanlynhankhau
                 e.Cancel = true;
                 errorProvider1.SetError(txtToTruong, "Tổ trưởng không được để trống!");
             }
-            else if (!Regex.IsMatch(txtToTruong.Text.Trim(), @"^[A-z,0-9]+$"))
-            {
-                e.Cancel = true;
-                errorProvider1.SetError(txtToTruong, "Tổ trưởng không được sử dụng ký tự đặc biệt!");
-            }
+            //else if (!Regex.IsMatch(txtToTruong.Text.Trim(), @"^[A-z,0-9]+$"))
+            //{
+            //    e.Cancel = true;
+            //    errorProvider1.SetError(txtToTruong, "Tổ trưởng không được sử dụng ký tự đặc biệt!");
+            //}
             else
             {
                 e.Cancel = false;

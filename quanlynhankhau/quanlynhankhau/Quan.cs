@@ -212,11 +212,11 @@ namespace quanlynhankhau
                 e.Cancel = true;
                 errorProvider1.SetError(txtTenQuan, "Không được để trống!");
             }
-            else if (!Regex.IsMatch(txtTenQuan.Text.Trim(), @"^[A-z,0-9]+$"))
-            {
-                e.Cancel = true;
-                errorProvider1.SetError(txtTenQuan, "không được sử dụng ký tự đặc biệt!");
-            }
+            //else if (!Regex.IsMatch(txtTenQuan.Text.Trim(), @"^[A-z,0-9]+$"))
+            //{
+            //    e.Cancel = true;
+            //    errorProvider1.SetError(txtTenQuan, "không được sử dụng ký tự đặc biệt!");
+            //}
             else
             {
                 e.Cancel = false;
@@ -231,11 +231,11 @@ namespace quanlynhankhau
                 e.Cancel = true;
                 errorProvider1.SetError(txtChuTich, "Không được để trống!");
             }
-            else if (!Regex.IsMatch(txtChuTich.Text.Trim(), @"^[A-z,0-9]+$"))
-            {
-                e.Cancel = true;
-                errorProvider1.SetError(txtChuTich, "không được sử dụng ký tự đặc biệt!");
-            }
+            //else if (!Regex.IsMatch(txtChuTich.Text.Trim(), @"^[A-z,0-9]+$"))
+            //{
+            //    e.Cancel = true;
+            //    errorProvider1.SetError(txtChuTich, "không được sử dụng ký tự đặc biệt!");
+            //}
             else
             {
                 e.Cancel = false;

@@ -24,8 +24,30 @@ namespace quanlynhankhau
         private void HoGiaDinh_Load(object sender, EventArgs e)
         {
             layDS();
+            LayTo();
         }
 
+        public void LayTo()
+        {
+            using (SqlConnection Cnn = new SqlConnection(connectionString))
+            {
+                using (SqlCommand Cmd = new SqlCommand("select maTo, tenTo from tblTo", Cnn))
+                {
+                    Cmd.CommandType = CommandType.Text;
+                    Cnn.Open();
+                    using (SqlDataAdapter da = new SqlDataAdapter(Cmd))
+                    {
+                        DataTable dt = new DataTable();
+                        da.Fill(dt);
+                        ListTo.DataSource = dt;
+                        ListTo.ValueMember = "maTo";
+                        ListTo.DisplayMember = "tenTo";
+                        //ListQuan.da
+                    }
+                    Cnn.Close();
+                }
+            }
+        }
 
         public void layDS()
         {
@@ -48,7 +70,6 @@ namespace quanlynhankhau
         public void resetForm()
         {
             txtMaHo.Clear();
-            txtMaTo.Clear();
             txtTenChuHo.Clear();
             radioButtonNam.Checked = true;
             dtpNS.Value = DateTime.Now;
@@ -57,11 +78,6 @@ namespace quanlynhankhau
             txtSDT.Clear();
             txtSoNha.Clear();
             txtSearch.Clear();
-        }
-        private void To_Load(object sender, EventArgs e)
-        {
-            layDS();
-
         }
 
         private void btnAdd_Click(object sender, EventArgs e)
@@ -77,7 +93,8 @@ namespace quanlynhankhau
                         Cmd.CommandText = "themHoGiaDinh";
                         Cnn.Open();
                         //@maTo, @hoTen, @sdt, @gioiTinh, @ngaySinh, @soNha
-                        Cmd.Parameters.AddWithValue("@maTo", txtMaTo.Text);
+                        Cmd.Parameters.AddWithValue("@maTo", ListTo.SelectedValue.ToString());
+
                         Cmd.Parameters.AddWithValue("@hoTen", txtTenChuHo.Text);
                         Cmd.Parameters.AddWithValue("@sdt", txtSDT.Text);
                         string gioiTinh = "";
@@ -116,7 +133,18 @@ namespace quanlynhankhau
         private void dgv_CellClick_1(object sender, DataGridViewCellEventArgs e)
         {
             txtMaHo.Text = dgv.CurrentRow.Cells["maHoGiaDinh"].Value.ToString();
-            txtMaTo.Text = dgv.CurrentRow.Cells["maTo"].Value.ToString();
+            String maTo = dgv.CurrentRow.Cells["maTo"].Value.ToString();
+            for (int i = 0; i < ListTo.Items.Count; i++)
+            {
+                ListTo.SelectedIndex = i;
+                int value = (int)ListTo.SelectedValue;
+                if (value.ToString().Equals(maTo))
+                {
+                    break;
+                }
+
+            }
+
             txtTenChuHo.Text = dgv.CurrentRow.Cells["hoten"].Value.ToString();
             txtSDT.Text = dgv.CurrentRow.Cells["sdt"].Value.ToString();
             string gioiTinh = dgv.CurrentRow.Cells["gioiTinh"].Value.ToString();
@@ -135,6 +163,8 @@ namespace quanlynhankhau
             dtpNS.Text = dgv.CurrentRow.Cells["ngaySinh"].Value.ToString();
             txtSoNha.Text = dgv.CurrentRow.Cells["soNha"].Value.ToString();
 
+
+
         }
         private void btnUpdate_Click(object sender, EventArgs e)
         {
@@ -150,7 +180,8 @@ namespace quanlynhankhau
                         Cnn.Open();
                         //@maHoGiaDinh,@maTo, @hoTen, @sdt, @gioiTinh, @ngaySinh, @soNha
                         Cmd.Parameters.AddWithValue("@maHoGiaDinh", txtMaHo.Text);
-                        Cmd.Parameters.AddWithValue("@maTo", txtMaTo.Text);
+                        //Cmd.Parameters.AddWithValue("@maTo", txtMaTo.Text);
+                        Cmd.Parameters.AddWithValue("@maTo", ListTo.SelectedValue.ToString());
                         Cmd.Parameters.AddWithValue("@hoTen", txtTenChuHo.Text);
                         Cmd.Parameters.AddWithValue("@sdt", txtSDT.Text);
                         string gioiTinh = "";
@@ -263,11 +294,11 @@ namespace quanlynhankhau
                 e.Cancel = true;
                 errorProvider1.SetError(txtTenChuHo, "Tên chủ hộ không được để trống!");
             }
-            else if (!Regex.IsMatch(txtTenChuHo.Text.Trim(), @"^[A-z,0-9]+$"))
-            {
-                e.Cancel = true;
-                errorProvider1.SetError(txtTenChuHo, "Tên chủ hộ không được sử dụng ký tự đặc biệt!");
-            }
+            //else if (!Regex.IsMatch(txtTenChuHo.Text.Trim(), @"^[A-z,0-9]+$"))
+            //{
+            //    e.Cancel = true;
+            //    errorProvider1.SetError(txtTenChuHo, "Tên chủ hộ không được sử dụng ký tự đặc biệt!");
+            //}
             else
             {
                 e.Cancel = false;
@@ -282,11 +313,11 @@ namespace quanlynhankhau
                 e.Cancel = true;
                 errorProvider1.SetError(txtSoNha, "Số nhà không được để trống!");
             }
-            else if (!Regex.IsMatch(txtSoNha.Text.Trim(), @"^[A-z,0-9]+$"))
-            {
-                e.Cancel = true;
-                errorProvider1.SetError(txtSoNha, "Số nhà không được sử dụng ký tự đặc biệt!");
-            }
+            //else if (!Regex.IsMatch(txtSoNha.Text.Trim(), @"^[A-z,0-9]+$"))
+            //{
+            //    e.Cancel = true;
+            //    errorProvider1.SetError(txtSoNha, "Số nhà không được sử dụng ký tự đặc biệt!");
+            //}
             else
             {
                 e.Cancel = false;

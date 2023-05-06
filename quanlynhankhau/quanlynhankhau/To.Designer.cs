@@ -38,7 +38,6 @@ namespace quanlynhankhau
             this.label5 = new System.Windows.Forms.Label();
             this.txtToTruong = new System.Windows.Forms.TextBox();
             this.txtSDT = new System.Windows.Forms.TextBox();
-            this.txtMaPhuong = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
@@ -50,6 +49,7 @@ namespace quanlynhankhau
             this.txtTenTo = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
+            this.ListPhuong = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgv)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.SuspendLayout();
@@ -127,13 +127,6 @@ namespace quanlynhankhau
             this.txtSDT.Size = new System.Drawing.Size(188, 22);
             this.txtSDT.TabIndex = 105;
             this.txtSDT.Validating += new System.ComponentModel.CancelEventHandler(this.txtSDT_Validating);
-            // 
-            // txtMaPhuong
-            // 
-            this.txtMaPhuong.Location = new System.Drawing.Point(158, 79);
-            this.txtMaPhuong.Name = "txtMaPhuong";
-            this.txtMaPhuong.Size = new System.Drawing.Size(188, 22);
-            this.txtMaPhuong.TabIndex = 104;
             // 
             // label4
             // 
@@ -238,11 +231,20 @@ namespace quanlynhankhau
             // 
             this.errorProvider1.ContainerControl = this;
             // 
+            // ListPhuong
+            // 
+            this.ListPhuong.FormattingEnabled = true;
+            this.ListPhuong.Location = new System.Drawing.Point(158, 83);
+            this.ListPhuong.Name = "ListPhuong";
+            this.ListPhuong.Size = new System.Drawing.Size(188, 24);
+            this.ListPhuong.TabIndex = 115;
+            // 
             // To
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1097, 724);
+            this.Controls.Add(this.ListPhuong);
             this.Controls.Add(this.txtTenTo);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.txtCBCA);
@@ -253,7 +255,6 @@ namespace quanlynhankhau
             this.Controls.Add(this.label5);
             this.Controls.Add(this.txtToTruong);
             this.Controls.Add(this.txtSDT);
-            this.Controls.Add(this.txtMaPhuong);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label1);
@@ -282,7 +283,6 @@ namespace quanlynhankhau
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox txtToTruong;
         private System.Windows.Forms.TextBox txtSDT;
-        private System.Windows.Forms.TextBox txtMaPhuong;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label1;
@@ -294,5 +294,6 @@ namespace quanlynhankhau
         private System.Windows.Forms.TextBox txtTenTo;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.ErrorProvider errorProvider1;
+        private System.Windows.Forms.ComboBox ListPhuong;
     }
 }

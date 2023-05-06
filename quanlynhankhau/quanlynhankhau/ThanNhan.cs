@@ -25,13 +25,35 @@ namespace quanlynhankhau
         private void ThanNhan_Load(object sender, EventArgs e)
         {
             layDS();
-
+            LayHo();
         }
 
         private void btnReset_Click(object sender, EventArgs e)
         {
             layDS();
             resetForm();
+        }
+
+        public void LayHo()
+        {
+            using (SqlConnection Cnn = new SqlConnection(connectionString))
+            {
+                using (SqlCommand Cmd = new SqlCommand("select maHoGiaDinh, hoten from tblHoGiaDinh", Cnn))
+                {
+                    Cmd.CommandType = CommandType.Text;
+                    Cnn.Open();
+                    using (SqlDataAdapter da = new SqlDataAdapter(Cmd))
+                    {
+                        DataTable dt = new DataTable();
+                        da.Fill(dt);
+                        ListHo.DataSource = dt;
+                        ListHo.ValueMember = "maHoGiaDinh";
+                        ListHo.DisplayMember = "hoten";
+                        //ListQuan.da
+                    }
+                    Cnn.Close();
+                }
+            }
         }
 
         public void layDS()
@@ -56,7 +78,7 @@ namespace quanlynhankhau
         public void resetForm()
         {
             txtMaThanNhan.Clear();
-            txtMaHoGD.Clear();
+            //txtMaHoGD.Clear();
             txtHoTen.Clear();
             radioButtonNam.Checked = true;
             dtpNS.Value = DateTime.Now;
@@ -81,8 +103,9 @@ namespace quanlynhankhau
                         Cmd.CommandType = CommandType.StoredProcedure;
                         Cmd.CommandText = "themThanNhan";
                         Cnn.Open();
-                        //@maHoGiaDinh, @hoten, @gioiTinh, @ngaySinh, @quanHeVoiChuHo
-                        Cmd.Parameters.AddWithValue("@maHoGiaDinh", txtMaHoGD.Text);
+                        Cmd.Parameters.AddWithValue("@maHogiadinh", ListHo.SelectedValue.ToString());
+
+
                         Cmd.Parameters.AddWithValue("@hoten", txtHoTen.Text);
                         string gioiTinh = "";
                         if (radioButtonNam.Checked)
@@ -121,7 +144,21 @@ namespace quanlynhankhau
         private void dgv_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             txtMaThanNhan.Text = dgv.CurrentRow.Cells["maThanNhan"].Value.ToString();
-            txtMaHoGD.Text = dgv.CurrentRow.Cells["maHoGiaDinh"].Value.ToString();
+            //txtMaHoGD.Text = dgv.CurrentRow.Cells["maHoGiaDinh"].Value.ToString();
+
+            String maho = dgv.CurrentRow.Cells["maHoGiaDinh"].Value.ToString();
+            //  ListQuan.SelectedIndex = ListQuan.FindString(maquan);
+
+            for (int i = 0; i < ListHo.Items.Count; i++)
+            {
+                ListHo.SelectedIndex = i;
+                int value = (int)ListHo.SelectedValue;
+                if (value.ToString().Equals(maho))
+                {
+                    break;
+                }
+
+            }
             txtHoTen.Text = dgv.CurrentRow.Cells["hoTen"].Value.ToString();
             string gioiTinh = dgv.CurrentRow.Cells["gioiTinh"].Value.ToString();
             if (gioiTinh == "Nam")
@@ -154,7 +191,7 @@ namespace quanlynhankhau
                         Cnn.Open();
                         //@maThanNhan, @maHoGiaDinh, @hoten, @gioiTinh, @ngaySinh, @quanHeVoiChuHo
                         Cmd.Parameters.AddWithValue("@maThanNhan", txtMaThanNhan.Text);
-                        Cmd.Parameters.AddWithValue("@maHoGiaDinh", txtMaHoGD.Text);
+                        Cmd.Parameters.AddWithValue("@maHo", ListHo.SelectedValue.ToString());
                         Cmd.Parameters.AddWithValue("@hoten", txtHoTen.Text);
                         string gioiTinh = "";
                         if (radioButtonNam.Checked)
@@ -260,11 +297,11 @@ namespace quanlynhankhau
                 e.Cancel = true;
                 errorProvider1.SetError(txtHoTen, "Họ tên không được để trống!");
             }
-            else if (!Regex.IsMatch(txtHoTen.Text.Trim(), @"^[A-z,0-9]+$"))
-            {
-                e.Cancel = true;
-                errorProvider1.SetError(txtHoTen, "Họ tên không được sử dụng ký tự đặc biệt!");
-            }
+            //else if (!Regex.IsMatch(txtHoTen.Text.Trim(), @"^[A-z,0-9]+$"))
+            //{
+            //    e.Cancel = true;
+            //    errorProvider1.SetError(txtHoTen, "Họ tên không được sử dụng ký tự đặc biệt!");
+            //}
             else
             {
                 e.Cancel = false;
@@ -279,11 +316,11 @@ namespace quanlynhankhau
                 e.Cancel = true;
                 errorProvider1.SetError(txtQuanHeVoiChuHo, "Quan hệ với chủ hộ không được để trống!");
             }
-            else if (!Regex.IsMatch(txtQuanHeVoiChuHo.Text.Trim(), @"^[A-z,0-9]+$"))
-            {
-                e.Cancel = true;
-                errorProvider1.SetError(txtQuanHeVoiChuHo, "Quan hệ với chủ hộ không được sử dụng ký tự đặc biệt!");
-            }
+            //else if (!Regex.IsMatch(txtQuanHeVoiChuHo.Text.Trim(), @"^[A-z,0-9]+$"))
+            //{
+            //    e.Cancel = true;
+            //    errorProvider1.SetError(txtQuanHeVoiChuHo, "Quan hệ với chủ hộ không được sử dụng ký tự đặc biệt!");
+            //}
             else
             {
                 e.Cancel = false;

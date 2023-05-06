@@ -36,7 +36,6 @@ namespace quanlynhankhau
             this.label5 = new System.Windows.Forms.Label();
             this.txtToTruong = new System.Windows.Forms.TextBox();
             this.txtSDT = new System.Windows.Forms.TextBox();
-            this.txtMaQuan = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
@@ -48,6 +47,7 @@ namespace quanlynhankhau
             this.txtTenPhuong = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
+            this.ListQuan = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgv)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.SuspendLayout();
@@ -108,13 +108,6 @@ namespace quanlynhankhau
             this.txtSDT.TabIndex = 70;
             this.txtSDT.Validating += new System.ComponentModel.CancelEventHandler(this.txtSDT_Validating);
             // 
-            // txtMaQuan
-            // 
-            this.txtMaQuan.Location = new System.Drawing.Point(183, 92);
-            this.txtMaQuan.Name = "txtMaQuan";
-            this.txtMaQuan.Size = new System.Drawing.Size(188, 22);
-            this.txtMaQuan.TabIndex = 69;
-            // 
             // label4
             // 
             this.label4.AutoSize = true;
@@ -141,9 +134,9 @@ namespace quanlynhankhau
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.Location = new System.Drawing.Point(94, 94);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(83, 20);
+            this.label1.Size = new System.Drawing.Size(88, 20);
             this.label1.TabIndex = 66;
-            this.label1.Text = "Mã quận: ";
+            this.label1.Text = "Tên quận: ";
             // 
             // txtSearch
             // 
@@ -218,11 +211,20 @@ namespace quanlynhankhau
             // 
             this.errorProvider1.ContainerControl = this;
             // 
+            // ListQuan
+            // 
+            this.ListQuan.FormattingEnabled = true;
+            this.ListQuan.Location = new System.Drawing.Point(183, 90);
+            this.ListQuan.Name = "ListQuan";
+            this.ListQuan.Size = new System.Drawing.Size(188, 24);
+            this.ListQuan.TabIndex = 82;
+            // 
             // Phuong
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1077, 729);
+            this.Controls.Add(this.ListQuan);
             this.Controls.Add(this.txtTenPhuong);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.btnReset);
@@ -231,7 +233,6 @@ namespace quanlynhankhau
             this.Controls.Add(this.label5);
             this.Controls.Add(this.txtToTruong);
             this.Controls.Add(this.txtSDT);
-            this.Controls.Add(this.txtMaQuan);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label1);
@@ -258,7 +259,6 @@ namespace quanlynhankhau
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox txtToTruong;
         private System.Windows.Forms.TextBox txtSDT;
-        private System.Windows.Forms.TextBox txtMaQuan;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label1;
@@ -270,5 +270,6 @@ namespace quanlynhankhau
         private System.Windows.Forms.TextBox txtTenPhuong;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.ErrorProvider errorProvider1;
+        private System.Windows.Forms.ComboBox ListQuan;
     }
 }

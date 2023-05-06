@@ -40,9 +40,30 @@ namespace quanlynhankhau
 
             }
         }
+        public void LayPhuong()
+        {
+            using (SqlConnection Cnn = new SqlConnection(connectionString))
+            {
+                using (SqlCommand Cmd = new SqlCommand("select maPhuong,tenPhuong from tblPhuong", Cnn))
+                {
+                    Cmd.CommandType = CommandType.Text;
+                    Cnn.Open();
+                    using (SqlDataAdapter da = new SqlDataAdapter(Cmd))
+                    {
+                        DataTable dt = new DataTable();
+                        da.Fill(dt);
+                        ListPhuong.DataSource = dt;
+                        ListPhuong.ValueMember = "maPhuong";
+                        ListPhuong.DisplayMember = "tenPhuong";
+                        //ListQuan.da
+                    }
+                    Cnn.Close();
+                }
+            }
+        }
         public void resetForm()
         {
-            txtMaPhuong.Clear();
+            //txtMaPhuong.Clear();
             txtTenTo.Clear();
             txtCBCA.Clear();
             txtMaTo.Clear();
@@ -55,7 +76,7 @@ namespace quanlynhankhau
         private void To_Load(object sender, EventArgs e)
         {
             layDS();
-
+            LayPhuong();
         }
 
         private void btnAdd_Click(object sender, EventArgs e)
@@ -70,7 +91,8 @@ namespace quanlynhankhau
                         Cmd.CommandType = CommandType.StoredProcedure;
                         Cmd.CommandText = "themTo";
                         Cnn.Open();
-                        Cmd.Parameters.AddWithValue("@maPhuong", txtMaPhuong.Text);
+                        //Cmd.Parameters.AddWithValue("@maPhuong", txtMaPhuong.Text);
+                        Cmd.Parameters.AddWithValue("@maPhuong", ListPhuong.SelectedValue.ToString());
                         Cmd.Parameters.AddWithValue("@tenTo", txtTenTo.Text);
                         Cmd.Parameters.AddWithValue("@cbca", txtCBCA.Text);
                         Cmd.Parameters.AddWithValue("@toTruong", txtToTruong.Text);
@@ -97,11 +119,25 @@ namespace quanlynhankhau
         private void dgv_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             txtMaTo.Text = dgv.CurrentRow.Cells["maTo"].Value.ToString();
-            txtMaPhuong.Text = dgv.CurrentRow.Cells["maPhuong"].Value.ToString();
+            //txtMaPhuong.Text = dgv.CurrentRow.Cells["maPhuong"].Value.ToString();
             txtTenTo.Text = dgv.CurrentRow.Cells["tenTo"].Value.ToString();
             txtCBCA.Text = dgv.CurrentRow.Cells["canBoCongAn"].Value.ToString();
             txtToTruong.Text = dgv.CurrentRow.Cells["toTruong"].Value.ToString();
             txtSDT.Text = dgv.CurrentRow.Cells["sdtToTruong"].Value.ToString();
+
+            String maphuong = dgv.CurrentRow.Cells["maPhuong"].Value.ToString();
+            //  ListQuan.SelectedIndex = ListQuan.FindString(maquan);
+
+            for (int i = 0; i < ListPhuong.Items.Count; i++)
+            {
+                ListPhuong.SelectedIndex = i;
+                int value = (int)ListPhuong.SelectedValue;
+                if (value.ToString().Equals(maphuong))
+                {
+                    break;
+                }
+
+            }
 
         }
         private void btnUpdate_Click(object sender, EventArgs e)
@@ -117,7 +153,8 @@ namespace quanlynhankhau
                         Cmd.CommandText = "SuaTo";
                         Cnn.Open();
                         Cmd.Parameters.AddWithValue("@maTo", txtMaTo.Text);
-                        Cmd.Parameters.AddWithValue("@maPhuong", txtMaPhuong.Text);
+                        //Cmd.Parameters.AddWithValue("@maPhuong", txtMaPhuong.Text);
+                        Cmd.Parameters.AddWithValue("@maQuan", ListPhuong.SelectedValue.ToString());
                         Cmd.Parameters.AddWithValue("@tenTo", txtTenTo.Text);
                         Cmd.Parameters.AddWithValue("@cbca", txtCBCA.Text);
                         Cmd.Parameters.AddWithValue("@toTruong", txtToTruong.Text);
@@ -222,11 +259,11 @@ namespace quanlynhankhau
                 e.Cancel = true;
                 errorProvider1.SetError(txtTenTo, "Tên tổ không được để trống!");
             }
-            else if (!Regex.IsMatch(txtTenTo.Text.Trim(), @"^[A-z,0-9]+$"))
-            {
-                e.Cancel = true;
-                errorProvider1.SetError(txtTenTo, "Tên tổ không được sử dụng ký tự đặc biệt!");
-            }
+            //else if (!Regex.IsMatch(txtTenTo.Text.Trim(), @"^[A-z,0-9]+$"))
+            //{
+            //    e.Cancel = true;
+            //    errorProvider1.SetError(txtTenTo, "Tên tổ không được sử dụng ký tự đặc biệt!");
+            //}
             else
             {
                 e.Cancel = false;
@@ -241,11 +278,11 @@ namespace quanlynhankhau
                 e.Cancel = true;
                 errorProvider1.SetError(txtCBCA, "CBCA không được để trống!");
             }
-            else if (!Regex.IsMatch(txtCBCA.Text.Trim(), @"^[A-z,0-9]+$"))
-            {
-                e.Cancel = true;
-                errorProvider1.SetError(txtCBCA, "CBCA không được sử dụng ký tự đặc biệt!");
-            }
+            //else if (!Regex.IsMatch(txtCBCA.Text.Trim(), @"^[A-z,0-9]+$"))
+            //{
+            //    e.Cancel = true;
+            //    errorProvider1.SetError(txtCBCA, "CBCA không được sử dụng ký tự đặc biệt!");
+            //}
             else
             {
                 e.Cancel = false;
@@ -260,11 +297,11 @@ namespace quanlynhankhau
                 e.Cancel = true;
                 errorProvider1.SetError(txtToTruong, "Tổ trưởng không được để trống!");
             }
-            else if (!Regex.IsMatch(txtToTruong.Text.Trim(), @"^[A-z,0-9]+$"))
-            {
-                e.Cancel = true;
-                errorProvider1.SetError(txtToTruong, "Tổ trưởng không được sử dụng ký tự đặc biệt!");
-            }
+            //else if (!Regex.IsMatch(txtToTruong.Text.Trim(), @"^[A-z,0-9]+$"))
+            //{
+            //    e.Cancel = true;
+            //    errorProvider1.SetError(txtToTruong, "Tổ trưởng không được sử dụng ký tự đặc biệt!");
+            //}
             else
             {
                 e.Cancel = false;

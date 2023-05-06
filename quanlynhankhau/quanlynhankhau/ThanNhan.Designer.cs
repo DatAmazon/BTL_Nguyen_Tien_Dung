@@ -35,7 +35,6 @@ namespace quanlynhankhau
             this.txtMaThanNhan = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.txtQuanHeVoiChuHo = new System.Windows.Forms.TextBox();
-            this.txtMaHoGD = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
@@ -51,6 +50,7 @@ namespace quanlynhankhau
             this.radioButtonNu = new System.Windows.Forms.RadioButton();
             this.groupBoxGender = new System.Windows.Forms.GroupBox();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
+            this.ListHo = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgv)).BeginInit();
             this.groupBoxGender.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
@@ -100,13 +100,6 @@ namespace quanlynhankhau
             this.txtQuanHeVoiChuHo.TabIndex = 138;
             this.txtQuanHeVoiChuHo.Validating += new System.ComponentModel.CancelEventHandler(this.txtQuanHeVoiChuHo_Validating);
             // 
-            // txtMaHoGD
-            // 
-            this.txtMaHoGD.Location = new System.Drawing.Point(223, 86);
-            this.txtMaHoGD.Name = "txtMaHoGD";
-            this.txtMaHoGD.Size = new System.Drawing.Size(188, 22);
-            this.txtMaHoGD.TabIndex = 137;
-            // 
             // label4
             // 
             this.label4.AutoSize = true;
@@ -133,9 +126,9 @@ namespace quanlynhankhau
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.Location = new System.Drawing.Point(89, 86);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(128, 20);
+            this.label1.Size = new System.Drawing.Size(135, 20);
             this.label1.TabIndex = 134;
-            this.label1.Text = "Mã hộ gia đình: ";
+            this.label1.Text = "Chủ hộ gia đình: ";
             // 
             // btnReset
             // 
@@ -256,11 +249,20 @@ namespace quanlynhankhau
             // 
             this.errorProvider1.ContainerControl = this;
             // 
+            // ListHo
+            // 
+            this.ListHo.FormattingEnabled = true;
+            this.ListHo.Location = new System.Drawing.Point(223, 88);
+            this.ListHo.Name = "ListHo";
+            this.ListHo.Size = new System.Drawing.Size(188, 24);
+            this.ListHo.TabIndex = 151;
+            // 
             // ThanNhan
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1074, 749);
+            this.Controls.Add(this.ListHo);
             this.Controls.Add(this.groupBoxGender);
             this.Controls.Add(this.dtpNS);
             this.Controls.Add(this.txtHoTen);
@@ -268,7 +270,6 @@ namespace quanlynhankhau
             this.Controls.Add(this.txtMaThanNhan);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.txtQuanHeVoiChuHo);
-            this.Controls.Add(this.txtMaHoGD);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label1);
@@ -298,7 +299,6 @@ namespace quanlynhankhau
         private System.Windows.Forms.TextBox txtMaThanNhan;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox txtQuanHeVoiChuHo;
-        private System.Windows.Forms.TextBox txtMaHoGD;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label1;
@@ -314,5 +314,6 @@ namespace quanlynhankhau
         private System.Windows.Forms.RadioButton radioButtonNu;
         private System.Windows.Forms.GroupBox groupBoxGender;
         private System.Windows.Forms.ErrorProvider errorProvider1;
+        private System.Windows.Forms.ComboBox ListHo;
     }
 }
